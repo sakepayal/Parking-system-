@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+public class ParkingSystem {
+    static String[] slots = {"A1", "A2", "A3", "B1", "B2", "B3"};
+    static boolean[] availability = {true, false, true, true, false, true}; // true = vacant
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n---- Parking System ----");
+            System.out.println("1. Find nearest parking");
+            System.out.println("2. Check parking availability");
+            System.out.println("3. View parking price");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    findNearestParking();
+                    break;
+                case 2:
+                    checkParkingAvailability();
+                    break;
+                case 3:
+                    viewParkingPrice();
+                    break;
+                case 4:
+                    System.out.println("Exiting Parking System. Thank you!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+
+        } while (choice != 4);
+        sc.close();
+    }
+
+    static void findNearestParking() {
+        for (int i = 0; i < slots.length; i++) {
+            if (availability[i]) {
+                System.out.println("Nearest available parking slot is: " + slots[i]);
+                return;
+            }
+        }
+        System.out.println("Sorry, no parking slots available currently.");
+    }
+
+    static void checkParkingAvailability() {
+        System.out.println("Parking Slot Availability:");
+        for (int i = 0; i < slots.length; i++) {
+            System.out.println(slots[i] + " : " + (availability[i] ? "Vacant" : "Occupied"));
+        }
+    }
+
+    static void viewParkingPrice() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter vehicle type (motorcycle/car): ");
+        String vehicle = sc.nextLine().toLowerCase();
+
+        if (vehicle.equals("motorcycle")) {
+            System.out.println("Parking price for motorcycle is Rs. 20 per hour.");
+        } else if (vehicle.equals("car")) {
+            System.out.println("Parking price for car is Rs. 50 per hour.");
+        } else {
+            System.out.println("Invalid vehicle type.");
+        }
+    }
+}
