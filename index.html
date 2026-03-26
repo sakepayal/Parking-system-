@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkyBook Airlines ✈️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    background: linear-gradient(135deg,#141e30,#243b55);
+    color: white;
+    text-align: center;
+}
+
+/* Container */
+.container {
+    max-width: 420px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+}
+
+/* Inputs */
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+input, select {
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+button {
+    background: linear-gradient(45deg,#ff9800,#ff5722);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Sections */
+.section { display: none; }
+.active { display: block; }
+
+/* Ticket */
+.ticket {
+    background: white;
+    color: black;
+    padding: 15px;
+    border-radius: 15px;
+    border-left: 6px solid orange;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<div class="container section active" id="home">
+    <h2>✈️ SkyBook Airlines</h2>
+    <p>Book your flight easily</p>
+    <button onclick="show('booking')">Search Flights</button>
+</div>
+
+<!-- BOOKING -->
+<div class="container section" id="booking">
+    <h2>✈️ Book Flight</h2>
+
+    <input type="text" id="name" placeholder="Passenger Name">
+    
+    <select id="from">
+        <option value="">From</option>
+        <option>Mumbai</option>
+        <option>Pune</option>
+        <option>Delhi</option>
+    </select>
+
+    <select id="to">
+        <option value="">To</option>
+        <option>Goa</option>
+        <option>Hyderabad</option>
+        <option>Bangalore</option>
+    </select>
+
+    <input type="date" id="date">
+    <input type="number" id="seats" placeholder="Seats">
+
+    <button onclick="goPayment()">Next → Payment</button>
+</div>
+
+<!-- PAYMENT -->
+<div class="container section" id="payment">
+    <h2>💳 Payment</h2>
+    <input placeholder="Card Number">
+    <input placeholder="Expiry">
+    <input placeholder="CVV">
+    <button onclick="generateTicket()">Pay Now</button>
+</div>
+
+<!-- BOARDING PASS -->
+<div class="container section" id="ticketPage">
+    <h2>🎟️ Boarding Pass</h2>
+    <div id="ticket"></div>
+</div>
+
+<script>
+
+function show(id){
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+function goPayment(){
+    let name = document.getElementById('name').value;
+    let from = document.getElementById('from').value;
+    let to = document.getElementById('to').value;
+    let date = document.getElementById('date').value;
+    let seats = document.getElementById('seats').value;
+
+    if(!name || !from || !to || !date || !seats){
+        alert("Fill all details");
+        return;
+    }
+
+    show('payment');
+}
+
+function generateTicket(){
+    let name = document.getElementById('name').value;
+    let from = document.getElementById('from').value;
+    let to = document.getElementById('to').value;
+    let date = document.getElementById('date').value;
+    let seats = document.getElementById('seats').value;
+
+    let price = seats * 5000;
+
+    document.getElementById('ticket').innerHTML = `
+    <div class="ticket">
+        <h3>✈️ Sky Airlines</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Route:</b> ${from} ➝ ${to}</p>
+        <p><b>Date:</b> ${date}</p>
+        <p><b>Seats:</b> ${seats}</p>
+        <p><b>Total:</b> ₹${price}</p>
+    </div>
+    `;
+
+    show('ticketPage');
+}
+
+</script>
+
+</body>
+</html>
